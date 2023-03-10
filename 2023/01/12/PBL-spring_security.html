@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Spring Security and Roles | RMR</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Spring Security and Roles" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some tips on building Spring Security into your Web Application(s)" />
+<meta property="og:description" content="Some tips on building Spring Security into your Web Application(s)" />
+<link rel="canonical" href="https://rebecca-123.github.io/rmr-tri3/2023/01/12/PBL-spring_security.html" />
+<meta property="og:url" content="https://rebecca-123.github.io/rmr-tri3/2023/01/12/PBL-spring_security.html" />
+<meta property="og:site_name" content="RMR" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-12T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Spring Security and Roles" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-01-12T00:00:00-06:00","datePublished":"2023-01-12T00:00:00-06:00","description":"Some tips on building Spring Security into your Web Application(s)","headline":"Spring Security and Roles","mainEntityOfPage":{"@type":"WebPage","@id":"https://rebecca-123.github.io/rmr-tri3/2023/01/12/PBL-spring_security.html"},"url":"https://rebecca-123.github.io/rmr-tri3/2023/01/12/PBL-spring_security.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/rmr-tri3/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://rebecca-123.github.io/rmr-tri3/feed.xml" title="RMR" /><link rel="shortcut icon" type="image/x-icon" href="/rmr-tri3/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/rmr-tri3/">RMR</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/rmr-tri3/schedule">Schedule</a><a class="page-link" href="/rmr-tri3/frontend/overview">Frontend</a><a class="page-link" href="/rmr-tri3/api/overview">API</a><a class="page-link" href="/rmr-tri3/search/">Search</a><a class="page-link" href="/rmr-tri3/categories/ap">AP Standards</a><a class="page-link" href="/rmr-tri3/categories/cte">CTE Standards</a><a class="page-link" href="/rmr-tri3/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Spring Security and Roles</h1><p class="page-description">Some tips on building Spring Security into your Web Application(s)</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2023-01-12T00:00:00-06:00" itemprop="datePublished">
+        Jan 12, 2023
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#security-concepts">Security Concepts</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#main-ideas">Main Ideas</a></li>
+<li class="toc-entry toc-h3"><a href="#backend---using-spring-security-to-protect">Backend - Using Spring Security to Protect</a></li>
+<li class="toc-entry toc-h3"><a href="#person-pojo-with-roles">Person POJO with roles.</a></li>
+<li class="toc-entry toc-h3"><a href="#role-pojo">Role POJO.</a></li>
+<li class="toc-entry toc-h3"><a href="#backend-code---training-spring-security-to-work-with-pojo-and-security-config">Backend Code - Training Spring Security to work with POJO and Security Config</a></li>
+<li class="toc-entry toc-h3"><a href="#frontend---building-configuration-and-overrides-to-support-spring-security">Frontend - Building Configuration and Overrides to support Spring Security</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#hacks">Hacks</a></li>
+</ul><h2 id="security-concepts">
+<a class="anchor" href="#security-concepts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Security Concepts</h2>
+<p>Last year Teacher spent time in Spring Security System for csa.nighthawkcodingsociety.com.  The implementation allows users (Person POJO) to login with specific roles (Role POJO). Two roles are present currently, ROLE_ADMIN and ROLE_STUDENT. In this implementation the ROLE_STUDENT is NOT able to delete users,  you must be ROLE_ADMIN to perform this task.</p>
+
+<p>Teacher took inspiration form <a href="https://www.youtube.com/watch?v=VVn9OG9nfH0&amp;t=6350s">YouTube</a>.  This video covers the detail shared below in about 2 hours.</p>
+
+<p>My issue with this starter code is I never had time to get to JWT and do not have a true web implementation.  Some thoughts the Teacher has on that topic are in JWT tech talk, most of the info is courtesy of ChatGPT.</p>
+
+<h3 id="main-ideas">
+<a class="anchor" href="#main-ideas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Main Ideas</h3>
+
+<p>Spring Security Code is focused in these areas: <a href="https://github.com/nighthawkcoders/nighthawk_csa/tree/master/src/main/java/com/nighthawk/csa/mvc/database">Database Folder</a>, <a href="https://github.com/nighthawkcoders/nighthawk_csa/tree/master/src/main/java/com/nighthawk/csa/mvc/security">Security Folder</a>, <a href="https://github.com/nighthawkcoders/nighthawk_csa/blob/master/src/main/resources/templates/login.html">Login Page</a> and <a href="https://github.com/nighthawkcoders/nighthawk_csa/blob/master/src/main/resources/templates/fragments/nav.html#L116-L126">Navbar fragment</a>.</p>
+
+<ul>
+  <li>Backend - Using Spring Security to Protect
+    <ul>
+      <li>Defining POJOs</li>
+      <li>Back End Spring Security Overrides to use Person and Role POJOs</li>
+      <li>Authentication (LOGIN), requiring login to access certain parts of site</li>
+      <li>Authorization (ROLE), differentiation of permission of ROLE_ADMIN and ROLE_ADMIN on</li>
+      <li>Training Spring Security to work with POJOs and Security Config</li>
+    </ul>
+  </li>
+  <li>Frontend - Building Configuration and Overrides to support Spring Security
+    <ul>
+      <li>Login Page (customizing your own)</li>
+      <li>Navbar with Control Login/Logout buttons</li>
+      <li>Error Page for 403 authorization failure</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="backend---using-spring-security-to-protect">
+<a class="anchor" href="#backend---using-spring-security-to-protect" aria-hidden="true"><span class="octicon octicon-link"></span></a>Backend - Using Spring Security to Protect</h3>
+<p>The key work of the backend and Spring Security is to associate user (Person) and their (Roles) with access to Get and Post Mappings.  Planning needs to go into your POJO to have role(s) associated with each person.</p>
+
+<h3 id="person-pojo-with-roles">
+<a class="anchor" href="#person-pojo-with-roles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Person POJO with roles.</h3>
+<blockquote>
+  <p>Observe Many to Many and role collection.</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+    <span class="c1">// automatic unique identifier for Person record</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">AUTO</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="c1">// email, password, roles are key to login and authentication</span>
+    <span class="nd">@NotEmpty</span>
+    <span class="nd">@Size</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="mi">5</span><span class="o">)</span>
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span>
+    <span class="nd">@Email</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+
+    <span class="nd">@NotEmpty</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
+
+    <span class="c1">// roles are stored in a "related" table</span>
+    <span class="nd">@ManyToMany</span><span class="o">(</span><span class="n">fetch</span> <span class="o">=</span> <span class="no">EAGER</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Collection</span><span class="o">&lt;</span><span class="nc">Role</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="o">...</span> 
+<span class="o">}</span>
+</code></pre></div></div>
+<h3 id="role-pojo">
+<a class="anchor" href="#role-pojo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Role POJO.</h3>
+<blockquote>
+  <p>Contains String to store ROLE_ADMIN, ROLE_STUDENT as distinct rows.  All users have ability to obtain the same roles as known by the system.</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Role</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">AUTO</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>###vBack End Code - Authentication and Authorization</p>
+<blockquote>
+  <p><a href="https://github.com/nighthawkcoders/nighthawk_csa/blob/master/src/main/java/com/nighthawk/csa/mvc/security/SecurityConfig.java">SecurityConfig</a> provided through Spring Security enables developer to Authorize and Authentication different portions of the site based on Login and Roles.  Additionally, you are able to direct the next page on operations like login and logout.  Review .antmatchers statements.  This file is being established to support http for both Web viewing and API access.</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span> <span class="c1">//THis is going to be altered to use the JWT</span>
+        <span class="c1">// security rules</span>
+        <span class="n">http</span>
+            <span class="o">.</span><span class="na">authorizeRequests</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="no">POST</span><span class="o">,</span> <span class="s">"/api/person/post/**"</span><span class="o">).</span><span class="na">hasAnyAuthority</span><span class="o">(</span><span class="s">"ROLE_STUDENT"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="no">DELETE</span><span class="o">,</span> <span class="s">"/api/person/delete/**"</span><span class="o">).</span><span class="na">hasAnyAuthority</span><span class="o">(</span><span class="s">"ROLE_ADMIN"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/database/personupdate/**"</span><span class="o">).</span><span class="na">hasAnyAuthority</span><span class="o">(</span><span class="s">"ROLE_STUDENT"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/database/persondelete/**"</span><span class="o">).</span><span class="na">hasAnyAuthority</span><span class="o">(</span><span class="s">"ROLE_ADMIN"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span> <span class="s">"/api/person/**"</span><span class="o">).</span><span class="na">permitAll</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span> <span class="s">"/api/refresh/token/**"</span><span class="o">).</span><span class="na">permitAll</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/"</span><span class="o">,</span> <span class="s">"/starters/**"</span><span class="o">,</span> <span class="s">"/frontend/**"</span><span class="o">,</span> <span class="s">"/mvc/**"</span><span class="o">,</span> <span class="s">"/database/person/**"</span><span class="o">,</span> <span class="s">"/database/personcreate"</span><span class="o">,</span> <span class="s">"/database/scrum/**"</span><span class="o">,</span> <span class="s">"/course/**"</span><span class="o">).</span><span class="na">permitAll</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">anyRequest</span><span class="o">().</span><span class="na">authenticated</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">formLogin</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">loginPage</span><span class="o">(</span><span class="s">"/login"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">permitAll</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">logout</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">logoutRequestMatcher</span><span class="o">(</span><span class="k">new</span> <span class="nc">AntPathRequestMatcher</span><span class="o">(</span><span class="s">"/logout"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">logoutSuccessUrl</span><span class="o">(</span><span class="s">"/database/person"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">permitAll</span><span class="o">()</span>
+        <span class="o">;</span>
+        <span class="c1">// Cross-Site Request Forgery needs to be disabled to allow activation of JS Fetch URIs</span>
+        <span class="n">http</span><span class="o">.</span><span class="na">csrf</span><span class="o">().</span><span class="na">disable</span><span class="o">();</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="backend-code---training-spring-security-to-work-with-pojo-and-security-config">
+<a class="anchor" href="#backend-code---training-spring-security-to-work-with-pojo-and-security-config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Backend Code - Training Spring Security to work with POJO and Security Config</h3>
+<blockquote>
+  <p><a href="https://github.com/nighthawkcoders/nighthawk_csa/blob/master/src/main/java/com/nighthawk/csa/mvc/database/ModelRepository.java">ModelRepo</a> implements UserDetailsService.  This associates user (Person) and roles (Role) with Spring Security as you can see with return values from method.</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ModelRepository</span> <span class="kd">implements</span> <span class="nc">UserDetailsService</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* UserDetailsService Overrides and maps Person &amp; Roles POJO into Spring Security */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">core</span><span class="o">.</span><span class="na">userdetails</span><span class="o">.</span><span class="na">UserDetails</span> <span class="nf">loadUserByUsername</span><span class="o">(</span><span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">UsernameNotFoundException</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="n">personJpaRepository</span><span class="o">.</span><span class="na">findByEmail</span><span class="o">(</span><span class="n">email</span><span class="o">);</span> <span class="c1">// setting variable user equal to the method finding the username in the database</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">person</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">UsernameNotFoundException</span><span class="o">(</span><span class="s">"User not found in database"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">Collection</span><span class="o">&lt;</span><span class="nc">SimpleGrantedAuthority</span><span class="o">&gt;</span> <span class="n">authorities</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">getRoles</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="n">role</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="c1">//loop through roles</span>
+            <span class="n">authorities</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">SimpleGrantedAuthority</span><span class="o">(</span><span class="n">role</span><span class="o">.</span><span class="na">getName</span><span class="o">()));</span> <span class="c1">//create a SimpleGrantedAuthority by passed in role, adding it all to the authorities list, list of roles gets past in for spring security</span>
+        <span class="o">});</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">security</span><span class="o">.</span><span class="na">core</span><span class="o">.</span><span class="na">userdetails</span><span class="o">.</span><span class="na">User</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getEmail</span><span class="o">(),</span> <span class="n">person</span><span class="o">.</span><span class="na">getPassword</span><span class="o">(),</span> <span class="n">authorities</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Password Encryption.  (BCrypt) is also managed with this file</p>
+  <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>    <span class="c1">// Setup Password style for Database storing and lookup</span>
+    <span class="nd">@Autowired</span>  <span class="c1">// Inject PasswordEncoder</span>
+    <span class="kd">private</span> <span class="nc">PasswordEncoder</span> <span class="n">passwordEncoder</span><span class="o">;</span>
+    <span class="nd">@Bean</span>  <span class="c1">// Sets up password encoding style</span>
+    <span class="nc">PasswordEncoder</span> <span class="nf">passwordEncoder</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">BCryptPasswordEncoder</span><span class="o">();</span>
+    <span class="o">}</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<blockquote>
+  <p>Password is encoded before JPA save.  Spring Security does decoding within its system, later we will build login to send user and password to Spring Security.</p>
+  <div class="language-java highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">passwordEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getPassword</span><span class="o">()));</span>
+        <span class="n">personJpaRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">person</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="frontend---building-configuration-and-overrides-to-support-spring-security">
+<a class="anchor" href="#frontend---building-configuration-and-overrides-to-support-spring-security" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frontend - Building Configuration and Overrides to support Spring Security</h3>
+
+<blockquote>
+  <p>Login Page (customizing your own).  If you override the form, it needs to be built returning a username and password.  The override was setup in <a href="https://github.com/nighthawkcoders/nighthawk_csa/blob/master/src/main/java/com/nighthawk/csa/mvc/security/MvcConfig.java">MvcConfig</a>.  The purpose of override is so it follows Style guideline from the site.</p>
+</blockquote>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"f"</span> <span class="na">th:action=</span><span class="s">"@{/login}"</span> <span class="na">method=</span><span class="s">"POST"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;table&gt;</span>
+        <span class="nt">&lt;tr</span> <span class="na">th:if=</span><span class="s">"${param.error}"</span> <span class="na">class=</span><span class="s">"alert alert-error"</span><span class="nt">&gt;</span>
+            Invalid username and password.
+        <span class="nt">&lt;/tr&gt;</span>
+        <span class="nt">&lt;tr</span> <span class="na">th:if=</span><span class="s">"${param.logout}"</span> <span class="na">class=</span><span class="s">"alert alert-success"</span><span class="nt">&gt;</span>
+            You have been logged out.
+        <span class="nt">&lt;/tr&gt;</span>
+        <span class="c">&lt;!-- 'email' is mapped to 'username' for Spring Security --&gt;</span>
+        <span class="nt">&lt;tr&gt;&lt;th&gt;&lt;label</span> <span class="na">for=</span><span class="s">"username"</span><span class="nt">&gt;</span>Email<span class="nt">&lt;/label&gt;&lt;/th&gt;&lt;/tr&gt;</span>
+        <span class="nt">&lt;tr&gt;&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"email"</span> <span class="na">id=</span><span class="s">'username'</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">size=</span><span class="s">"20"</span> <span class="na">required</span><span class="nt">&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+        <span class="nt">&lt;tr&gt;&lt;th&gt;&lt;label</span> <span class="na">for=</span><span class="s">"password"</span><span class="nt">&gt;</span>Password<span class="nt">&lt;/label&gt;&lt;/th&gt;&lt;/tr&gt;</span>
+        <span class="nt">&lt;tr&gt;&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">id=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">size=</span><span class="s">"20"</span> <span class="na">required</span><span class="nt">&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+        <span class="nt">&lt;tr&gt;&lt;th&gt;&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Submit"</span><span class="nt">&gt;&lt;/th&gt;&lt;/tr&gt;</span>
+        <span class="nt">&lt;tr&gt;&lt;td&gt;&lt;a</span> <span class="na">th:href=</span><span class="s">"@{/database/personcreate}"</span><span class="nt">&gt;</span>Sign Up<span class="nt">&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Navbar Customizations. Using Thymeleaf and Spring Security the Navbar toggles between Login/Logout based off of Spring Security status.</p>
+  <div class="language-html highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Login/Logout --&gt;</span>
+    <span class="nt">&lt;th:block</span> <span class="na">sec:authorize=</span><span class="s">"isAnonymous()"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"px-3"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">th:href=</span><span class="s">'@{/login}'</span> <span class="na">class=</span><span class="s">"link-dark"</span><span class="nt">&gt;</span>Login<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/th:block&gt;</span>
+    <span class="nt">&lt;th:block</span> <span class="na">sec:authorize=</span><span class="s">"isAuthenticated()"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"px-3"</span><span class="nt">&gt;</span>
+       <span class="nt">&lt;a</span> <span class="na">th:href=</span><span class="s">'@{/logout}'</span> <span class="na">class=</span><span class="s">"link-dark"</span><span class="nt">&gt;</span>Logout<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/th:block&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<blockquote>
+  <p>Authorization error - 403. Following standard of 404 errors, a 403 page is inserted to provide better user experience versus Spring Boot error page.  <a href="https://github.com/nighthawkcoders/nighthawk_csa/blob/master/src/main/resources/templates/error/403.html">403.html</a>.  Main purpose of this page is to direct the user back into the website with href.</p>
+</blockquote>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"jumbotron jumbotron-fluid"</span> <span class="na">style=</span><span class="s">"text-align: center; "</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h2&gt;</span>You don't have permission to do that! (Insufficient Role)<span class="nt">&lt;/h2&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/"</span><span class="nt">&gt;</span>Go Home<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<h2 id="hacks">
+<a class="anchor" href="#hacks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hacks</h2>
+<blockquote>
+  <p>This blog should give you many considerations when considering how to design a login system with roles.  There are many features to consider, specifically what elements of site will be used by users/roles.</p>
+  <ul>
+    <li>Start to design security features for your own project</li>
+    <li>Make a clone of the Spring Project</li>
+    <li>Try to restrict Delete on Scrum Page to ADMIN rule.</li>
+  </ul>
+</blockquote>
+
+  </div><a class="u-url" href="/rmr-tri3/2023/01/12/PBL-spring_security.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/rmr-tri3/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="https://rebecca-123.github.io/rmr-tri3/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/rmr-tri3/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>RMR Team Lesson Management</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
