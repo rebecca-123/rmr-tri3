@@ -98,9 +98,21 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#day-3">Day 3:</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#pbl-management-feature">PBL Management Feature</a></li>
+<li class="toc-entry toc-h1"><a href="#pbl-management-feature">PBL Management Feature</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#databases">Databases</a></li>
+<li class="toc-entry toc-h2"><a href="#wireframe-plans">Wireframe Plans</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#no-login-required">No login required</a></li>
+<li class="toc-entry toc-h3"><a href="#login-required">Login required</a></li>
+<li class="toc-entry toc-h3"><a href="#admin-only">Admin only</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul><h1 id="pairtrios-and-team-members">
 <a class="anchor" href="#pairtrios-and-team-members" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pair/Trios and Team Members</h1>
+
 <ol>
   <li>Allie Xiao, Saathvika Ajith, Soren Zhuang</li>
   <li>Rebecca Su, Aadya Daita, Saumya Palakodety</li>
@@ -111,6 +123,7 @@ window.onload = wrap_img;
 
 <h1 id="skit---merge-sort-watermelon-fair">
 <a class="anchor" href="#skit---merge-sort-watermelon-fair" aria-hidden="true"><span class="octicon octicon-link"></span></a>Skit - Merge Sort (Watermelon Fair)</h1>
+
 <ol>
   <li>Fun Scenario -&gt; (Person) wants to sort how big each of his prize winning watermelons are, but he doesn’t have them in order!</li>
   <li>Amongst ourselves, we each grab a random number sticky note from a bucket</li>
@@ -125,6 +138,7 @@ window.onload = wrap_img;
 
 <h1 id="teaching---days-1-and-2-collegeboard-units-6-8-arrays-arraylists-and-2d-arrays-and-frqs-3-and-4">
 <a class="anchor" href="#teaching---days-1-and-2-collegeboard-units-6-8-arrays-arraylists-and-2d-arrays-and-frqs-3-and-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Teaching - Days 1 and 2 CollegeBoard Units 6-8 (Arrays, ArrayLists, and 2D Arrays) and FRQs 3 and 4</h1>
+
 <ul>
   <li>Teaching plan:
     <ul>
@@ -158,11 +172,55 @@ window.onload = wrap_img;
 
 <h1 id="pbl-management-feature">
 <a class="anchor" href="#pbl-management-feature" aria-hidden="true"><span class="octicon octicon-link"></span></a>PBL Management Feature</h1>
+
+<h2 id="databases">
+<a class="anchor" href="#databases" aria-hidden="true"><span class="octicon octicon-link"></span></a>Databases</h2>
+
 <ul>
-  <li>Two databases with login functionality</li>
-  <li>Login is only for members of the team</li>
+  <li>Team database (all scrum teams) –&gt; store team name and password for login functionality</li>
+  <li>
+    <p>Assignment database within each team (similar to notes for person)</p>
+
+    <ul>
+      <li>Many to One: one team has many assignments
+        <ul>
+          <li>Each assignment will have link to review ticket, self-grade</li>
+          <li>TEACHER Role should be able to add final grade</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
   <li>Team database manages by sub-teams and assignment/scores with Roles</li>
   <li>Grading database is for each sub team of other groups and includes grading and comments</li>
+</ul>
+
+<h2 id="wireframe-plans">
+<a class="anchor" href="#wireframe-plans" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wireframe Plans</h2>
+
+<h3 id="no-login-required">
+<a class="anchor" href="#no-login-required" aria-hidden="true"><span class="octicon octicon-link"></span></a>No login required</h3>
+
+<ul>
+  <li>Home page/nav bar</li>
+  <li>Sign up page</li>
+  <li>Login page</li>
+  <li>Database with all teams</li>
+</ul>
+
+<h3 id="login-required">
+<a class="anchor" href="#login-required" aria-hidden="true"><span class="octicon octicon-link"></span></a>Login required</h3>
+
+<ul>
+  <li>Team dashboard/profile page</li>
+  <li>Update team profile page</li>
+  <li>Team assignment database</li>
+</ul>
+
+<h3 id="admin-only">
+<a class="anchor" href="#admin-only" aria-hidden="true"><span class="octicon octicon-link"></span></a>Admin only</h3>
+
+<ul>
+  <li>Delete team page</li>
 </ul>
 
 <p><a href="https://github.com/Rebecca-123/rmr-tri3/issues/1">Link to review ticket</a></p>
