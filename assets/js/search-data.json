@@ -47,13 +47,24 @@
   
 
   
-
+      ,"page3": {
+          "title": "Team Page",
+          "content": "Joke HaHa Boohoo .",
+          "url": "https://rebecca-123.github.io/rmr-tri3/schedule",
+          "relUrl": "/schedule",
+          "date": ""
+      }
+      
   
 
   
 
   
-      ,"page6": {
+
+  
+
+  
+      ,"page7": {
           "title": "About",
           "content": "This site is built with fastpages . Key Links . GitHub Repos: github.com/nighthawkcoders, Spring Portfolio Template | AWS Deployments: csa.nighthawkcodingsociety.com | Slack: Join Link | 2021-2022 Archives: Fall, Early Winter, Late Winter, Spring | . .",
           "url": "https://rebecca-123.github.io/rmr-tri3/about/",
@@ -86,7 +97,7 @@
   
 
   
-      ,"page15": {
+      ,"page16": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://rebecca-123.github.io/rmr-tri3/robots.txt",
